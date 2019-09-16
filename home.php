@@ -9,7 +9,14 @@ if(isset($_POST["btnInactive"])){
 ?>
 
 <div class="container">
-    <?php    $sql = "select n.*,c.CategoryName,CONCAT(u.FirstName,' ',u.LastName,' (',u.Type,')') as FullName from news n                 left join news_category c on c.CategoryCode = n.CategoryCode                join user u on u.UserCode = n.CreatedBy                where n.Active = 1 order by n.NewsCode desc";    $datas = SelectRows($sql);    while($data = $datas->fetch_array()){    ?>
+    <?php
+    $sql = "select n.*,c.CategoryName,CONCAT(u.FirstName,' ',u.LastName,' (',u.Type,')') as FullName from news n 
+                left join news_category c on c.CategoryCode = n.CategoryCode
+                join user u on u.UserCode = n.CreatedBy
+                where n.Active = 1 order by n.NewsCode desc";
+    $datas = SelectRows($sql);
+    while($data = $datas->fetch_array()){
+    ?>
     <div class="row">
         <div class="col-lg-4">
             <img src="<?php echo $data["Image"] ?>" alt="<?php echo $data["Subject"] ?>" style="width:100%" />
@@ -20,6 +27,8 @@ if(isset($_POST["btnInactive"])){
                 <span>Posted On : <b><?php echo $data["CreatedOn"] ?></b></span>
                 |
                 <span>Posted By : <b><?php echo $data["FullName"] ?></b></span>
+                |
+                <span>Category : <b><?php echo $data["CategoryName"] ?></b></span>
             </p>
             <?php echo str_replace("\n","<br>",$data["Description"]) ?>
         </div>
